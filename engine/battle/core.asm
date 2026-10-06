@@ -1869,8 +1869,6 @@ DrawPlayerHUDAndHPBar:
 	ld [wChannelSoundIDs + CHAN5], a
 	ret
 .setLowHealthAlarm
-	ld hl, wLowHealthAlarm
-	set BIT_LOW_HEALTH_ALARM, [hl]
 	ret
 
 DrawEnemyHUDAndHPBar:
