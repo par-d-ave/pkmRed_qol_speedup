@@ -276,13 +276,10 @@ OverworldLoopLessDelay::
 .moveAhead2
 	ld hl, wMiscFlags
 	res BIT_TURNING, [hl]
-	ld a, [wWalkBikeSurfState]
-	dec a ; riding a bike?
-	jr nz, .normalPlayerSpriteAdvancement
 	ld a, [wMovementFlags]
 	bit BIT_LEDGE_OR_FISHING, a
 	jr nz, .normalPlayerSpriteAdvancement
-	call DoBikeSpeedup
+	call AdvancePlayerSprite
 .normalPlayerSpriteAdvancement
 	call AdvancePlayerSprite
 	ld a, [wWalkCounter]
