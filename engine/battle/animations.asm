@@ -136,6 +136,11 @@ DrawFrameBlock:
 	jr z, .advanceFrameBlockDestAddr ; skip delay and don't clean OAM buffer
 	ld a, [wSubAnimFrameDelay]
 	ld c, a
+	srl c
+	srl c
+	jr nz, .delay
+	ld c, 1
+	.delay
 	call DelayFrames
 	ld a, [wFBMode]
 	cp FRAMEBLOCKMODE_03
