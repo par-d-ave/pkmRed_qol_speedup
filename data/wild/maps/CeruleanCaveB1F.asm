@@ -3,9 +3,9 @@ CeruleanCaveB1FWildMons:
 	db 55, RHYDON
 	db 55, MAROWAK
 	db 55, ELECTRODE
-	db 64, CHANSEY
-	db 64, PARASECT
-	db 64, RAICHU
+	db 64, BULBASAUR
+	db 64, CHARMANDER
+	db 64, SQUIRTLE
 IF DEF(_RED)
 	db 57, ARBOK
 ENDC

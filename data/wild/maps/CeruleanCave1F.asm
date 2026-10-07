@@ -3,8 +3,8 @@ CeruleanCave1FWildMons:
 	db 46, GOLBAT
 	db 46, HYPNO
 	db 46, MAGNETON
-	db 49, DODRIO
-	db 49, VENOMOTH
+	db 49, OMANYTE
+	db 49, KABUTO
 IF DEF(_RED)
 	db 52, ARBOK
 ENDC
