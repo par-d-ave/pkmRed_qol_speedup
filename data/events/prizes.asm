@@ -45,7 +45,7 @@ PrizeMenuMon2Cost:
 IF DEF(_RED)
 	bcd2 2800
 	bcd2 5500
-	bcd2 9999
+	bcd2 5500
 ENDC
 IF DEF(_BLUE)
 	bcd2 2500
