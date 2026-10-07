@@ -170,8 +170,6 @@ SaveMenu:
 	hlcoord 1, 14
 	ld de, NowSavingString
 	call PlaceString
-	ld c, 120
-	call DelayFrames
 	ld hl, GameSavedText
 	call PrintText
 	ld a, SFX_SAVE
