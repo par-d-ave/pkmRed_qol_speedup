@@ -948,20 +948,64 @@ OaksLabReceivedMonText:
 	text_end
 
 OaksLabLastMonScript:
-	ld a, OAKSLAB_OAK1
-	ldh [hSpriteIndex], a
-	ld a, SPRITESTATEDATA1_FACINGDIRECTION
-	ldh [hSpriteDataOffset], a
-	call GetPointerWithinSpriteStateData1
-	ld [hl], SPRITE_FACING_DOWN
-	ld hl, OaksLabLastMonText
-	call PrintText
-	jp TextScriptEnd
+        ld a, OAKSLAB_OAK1
+        ldh [hSpriteIndex], a
+        ld a, SPRITESTATEDATA1_FACINGDIRECTION
+        ldh [hSpriteDataOffset], a
+        call GetPointerWithinSpriteStateData1
+        ld [hl], SPRITE_FACING_DOWN
+
+        ; Check whether Mew is already registered as owned.
+        ld a, DEX_MEW
+        ld [wPokedexNum], a
+        dec a
+        ld c, a
+        ld b, FLAG_TEST
+        ld hl, wPokedexOwned
+        predef FlagActionPredef
+        ld a, c
+        and a
+        jr nz, .already_owned
+
+        ; Give Mew at level 5 (standard starting level for gifts and glitches).
+        ; Preserve the interacted Poké Ball's object index.
+        ld a, [wSpriteIndex]
+        push af
+        lb bc, MEW, 5
+        call GivePokemon
+        jr nc, .failed
+
+        ; Hide the correct ball only if the gift succeeded.
+        pop af
+        cp OAKSLAB_CHARMANDER_POKE_BALL
+        jr nz, .not_charmander
+        ld a, TOGGLE_STARTER_BALL_1
+        jr .hide_ball
+.not_charmander
+        cp OAKSLAB_SQUIRTLE_POKE_BALL
+        jr nz, .not_squirtle
+        ld a, TOGGLE_STARTER_BALL_2
+        jr .hide_ball
+.not_squirtle
+        ld a, TOGGLE_STARTER_BALL_3
+.hide_ball
+        ld [wToggleableObjectIndex], a
+        predef HideObject
+        jp TextScriptEnd
+
+.failed
+        pop af
+        jp TextScriptEnd
+
+.already_owned
+        ld hl, OaksLabLastMonText
+        call PrintText
+        jp TextScriptEnd
 
 OaksLabLastMonText:
-	text_far _OaksLabLastMonText
-	text_end
-
+        text_far _OaksLabLastMonText
+        text_end
+		
 OaksLabOak1Text:
 	text_asm
 	CheckEvent EVENT_PALLET_AFTER_GETTING_POKEBALLS
